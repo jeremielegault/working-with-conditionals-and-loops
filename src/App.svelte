@@ -46,8 +46,7 @@
     {description}
     userImage={image}
   />
-{/if}
-{#if formState == "INVALID"}
+{:else if formState == "INVALID"}
   <h1>YOU MUST FINISH THE FORM</h1>
 {/if}
 
