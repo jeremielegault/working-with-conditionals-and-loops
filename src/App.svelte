@@ -7,7 +7,6 @@
   let description = "";
   let formState = "empty";
   let createdContacts = [];
-
   function addContactCard() {
     if (
       name.trim().length == 0 ||
@@ -21,6 +20,7 @@
     createdContacts = [
       ...createdContacts,
       {
+        id: Math.random(),
         name: name,
         jobTitle: title,
         imageUrl: image,
@@ -28,6 +28,12 @@
       },
     ];
     formState = "done";
+  }
+  function deleteFirst() {
+    createdContacts = createdContacts.slice(1);
+  }
+  function deleteLast() {
+    createdContacts = createdContacts.slice(0, -1);
   }
 </script>
 
@@ -50,18 +56,24 @@
   </div>
 </div>
 <button on:click={addContactCard}>Add Contact Card</button>
+<button on:click={deleteFirst}>Delete First</button>
+<button on:click={deleteLast}>Delete Last</button>
+
 {#if formState == "INVALID"}
   <h1>YOU MUST FINISH THE FORM</h1>
 {:else}
   <p>please enter some data and click the button to submit</p>
 {/if}
-{#each createdContacts as contact}
+{#each createdContacts as contact, index (contact.id)}
+  <h2># {index + 1}</h2>
   <ContactCard
     userName={contact.name}
     jobTitle={contact.jobTitle}
     description={contact.desc}
     userImage={contact.imageUrl}
   />
+{:else}
+  <p>please start adding some contacts</p>
 {/each}
 
 <style>
